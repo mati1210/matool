@@ -9,7 +9,7 @@ OUT=${OUT:A}
 loopdev="$(losetup -fPL --show $OUT/sys)"
 mountdir="$(mktemp -dt ukimnt.XXXXXXXX)"
 
-mount ${loopdev}p1 $mountdir
+mount ${loopdev}p1 $mountdir -o noatime
 
 SYSROOT=$OUT/btrfsroot.zst
 if [[ ! -f $SYSROOT ]] {

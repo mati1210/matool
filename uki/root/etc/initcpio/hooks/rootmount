@@ -2,12 +2,12 @@
 
 run_hook() {
 	modprobe zram
-
     ramsize="$(awk '/MemTotal/{print $2}' /proc/meminfo)"
 
     root="$(zramctl --find --size $((ramsize /2 ))K -a zstd)"
-    swap="$(zramctl --find --size $((ramsize /2 ))K -a zstd)"
+	ln -s "$root" /dev/root
 
+    swap="$(zramctl --find --size $((ramsize /2 ))K -a zstd)"
     mkswap "$swap"
     swapon "$swap" -p 100
 
@@ -19,5 +19,5 @@ run_hook() {
 	btrfs property set -f /new_root/@ ro false
 
 	umount /new_root
-	mount "$root" /new_root
+	mount "$root" /new_root -o rw,noatime
 }
