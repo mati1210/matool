@@ -15,7 +15,7 @@ SYSROOT=$OUT/btrfsroot.zst
 if [[ ! -f $SYSROOT ]] {
 	pushd $mountdir
 		[ ! -d @ ] && btrfs sub snap -r . @
-		btrfs send @|zstd -T0 --long --ultra -22 -vo $SYSROOT
+		btrfs send --proto 2 @|zstd -T0 --long --ultra -22 -vo $SYSROOT
 	popd
 }
 
