@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: GPL-2.0-only
+
+build() {
+	add_file /out/btrfsroot.zst /btrfsroot.zst
+
+	add_module zram
+	add_module btrfs
+
+	for binary in {mkfs.,}btrfs zstd zramctl mkswap swapon; do
+		add_binary $binary
+	done
+
+	add_runscript
+}
+
+help() {
+    cat <<HELPEOF
+HELPEOF
+}
+
+# vim: set ft=sh ts=4 sw=4 et:

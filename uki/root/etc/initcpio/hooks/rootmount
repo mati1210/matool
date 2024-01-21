@@ -1,0 +1,23 @@
+#!/usr/bin/ash
+
+run_hook() {
+	modprobe zram
+
+    ramsize="$(awk '/MemTotal/{print $2}' /proc/meminfo)"
+
+    root="$(zramctl --find --size $((ramsize /2 ))K -a zstd)"
+    swap="$(zramctl --find --size $((ramsize /2 ))K -a zstd)"
+
+    mkswap "$swap"
+    swapon "$swap" -p 100
+
+    mkfs.btrfs "$root" -m single
+	mount "$root" /new_root
+
+	zstd -dc /btrfsroot.zst | btrfs receive /new_root
+	btrfs sub set-default /new_root/@
+	btrfs property set -f /new_root/@ ro false
+
+	umount /new_root
+	mount "$root" /new_root
+}
