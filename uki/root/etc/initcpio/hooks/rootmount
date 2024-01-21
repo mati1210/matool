@@ -17,7 +17,13 @@ run_hook() {
     mkfs.btrfs "$root" -m single
 	mount "$root" /new_root
 
-	zstd -dc /btrfsroot.zst | btrfs receive /new_root
+	rootf="$(ls -1 /root.*)"
+	case "$rootf" in
+		*zst) zstd -dc /root.zst;;
+		*xz) xz -dc /root.xz;;
+		*lz4) lz4 -dc /root.lz4;;
+	esac | btrfs receive /new_root
+
 	btrfs sub set-default /new_root/@
 	btrfs property set -f /new_root/@ ro false
 
