@@ -1,6 +1,0 @@
-#!/bin/zsh -e
-pacman -S --noconfirm mkinitcpio
-mkinitcpio \
-	--config /etc/mkinitcpio.conf \
-	--cmdline /etc/cmdline \
-	--uki /out/mow.efi

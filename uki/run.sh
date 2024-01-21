@@ -45,7 +45,11 @@ if [[ ! -f $SYSROOT ]] {
 cp -av root/. $mountdir
 
 pacstrap -c $mountdir mkinitcpio
-arch-chroot $mountdir /mkinitrd
+arch-chroot $mountdir \
+	mkinitcpio \
+		--config /etc/mkinitcpio.conf \
+		--cmdline /etc/cmdline \
+		--uki /out/mow.efi
 
 umount -v $mountdir/out $mountdir
 losetup -d $loopdev
