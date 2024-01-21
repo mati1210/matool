@@ -11,8 +11,9 @@ run_hook() {
 
 	swapsize=$((ramsize - rootsize))
     swap=$(zramctl --find --size ${swapsize}K -a zstd)
+    echo 0 > /sys/module/zswap/parameters/enabled
     mkswap "$swap"
-    swapon "$swap" -p 100
+    swapon "$swap" -p 100 -d
 
     mkfs.btrfs "$root" -m single
 	mount "$root" /new_root
