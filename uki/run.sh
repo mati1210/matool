@@ -10,6 +10,13 @@ loopdev="$(losetup -fPL --show $OUT/sys)"
 mountdir="$(mktemp -dt ukimnt.XXXXXXXX)"
 
 mount ${loopdev}p1 $mountdir -o noatime
+mount --mkdir --bind $OUT $mountdir/out
+
+if (( DEBUG )) {
+    printf 'mountdir=%s\n' $mountdir
+    echo any key to continue
+    read
+}
 
 SYSROOT=$OUT/btrfsroot.zst
 if [[ ! -f $SYSROOT ]] {
@@ -20,7 +27,6 @@ if [[ ! -f $SYSROOT ]] {
 }
 
 cp -av root/. $mountdir
-mount --bind $OUT $mountdir/out
 
 pacstrap -c $mountdir mkinitcpio
 arch-chroot $mountdir /mkinitrd
