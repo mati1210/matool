@@ -1,0 +1,4 @@
+[submodule "sys/dotfiles"]
+	path = sys/dotfiles
+	url = https://github.com/mati1210/dotfiles
+	branch = home
