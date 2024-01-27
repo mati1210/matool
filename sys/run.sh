@@ -6,6 +6,7 @@
 #
 # 	CACHEBIND: if set, sets up overlay mount on $WORKDIR/cache to /var/cache/pacman/pkg. requires root
 #
+# 	BROWSER: choose installed browser, or "none". by default it's set to chromium
 cd ${0:h}
 
 cp dotfiles/.config/tmux/tmux.conf mkosi.extra/etc/tmux.conf
@@ -17,6 +18,7 @@ echo 'ZDOTDIR=/etc/zsh' >> mkosi.extra/etc/zsh/zshenv
 
 args=()
 : ${WORKDIR:=$PWD/matool.workdir}
+: ${BROWSER:=chromium}
 
 args+=(
 	--cache-dir "$WORKDIR/cache"
@@ -33,6 +35,12 @@ if (( $+CACHEBIND )) {
 			-o workdir=work \
 			pkg
 	popd
+}
+
+if [[ $BROWSER != none ]] {
+	args+=(
+		-p $BROWSER
+	)
 }
 
 mkosi $args $@
