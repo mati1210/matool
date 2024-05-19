@@ -1,1 +1,1 @@
-(( ! $+TMUX )) && exec tmux new-session -As $USER
+(( ! $+TMUX )) && exec tmux -u new-session -As $USER
