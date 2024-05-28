@@ -20,8 +20,9 @@ args=()
 : ${WORKDIR:=$PWD/matool.workdir}
 : ${BROWSER:=chromium}
 
+mkdir -p $WORKDIR/{cache,workspace}
 args+=(
-	--cache-dir "$WORKDIR/cache"
+	--package-cache-dir "$WORKDIR/cache"
 	--workspace-dir "$WORKDIR/workspace"
 )
 
