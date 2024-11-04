@@ -1,8 +1,0 @@
-#!/bin/zsh
-systemctl enable \
-	NetworkManager \
-	sshd \
-	pacman-init
-
-sed -i "s/#Server/Server/g" /etc/pacman.d/mirrorlist
-rm -rf /var/lib/pacman/sync
