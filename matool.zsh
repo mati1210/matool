@@ -89,9 +89,10 @@ systemd-firstboot \
 	--locale=$LOCALE \
 	--keymap=$KEYMAP \
 	--timezone=$TZ \
-	--hostname=$HOSTNAME \
-	--delete-root-password \
-	--root-shell=/bin/zsh
+	--hostname=$HOSTNAME
+
+arch-chroot . \
+	bash -c 'chsh -s /bin/zsh root && chpasswd -e <<< root:U6aMy0wojraho'
 
 arch-chroot . \
 	systemctl enable \
