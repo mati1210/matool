@@ -80,7 +80,7 @@ cp -av dotfiles/.config/zsh  $SUBVOLDIR/etc/
 cp -av dotfiles/.config/tmux/tmux.conf  $SUBVOLDIR/etc/tmux.conf
 cp -av root/. $SUBVOLDIR/
 
-pacstrap -c $SUBVOLDIR $pkgs
+pacstrap -Kc $SUBVOLDIR $pkgs
 
 pushd $SUBVOLDIR
 systemd-firstboot \
@@ -105,7 +105,6 @@ for file (
 	./etc/machine-id
 	./var/lib/dbus/machine-id
 	./var/lib/systemd/random-seed
-	./etc/pacman.d/gnupg
 ) {
 	if [[ -e $file ]] rm -vr $file
 }
