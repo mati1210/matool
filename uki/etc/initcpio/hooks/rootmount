@@ -1,6 +1,10 @@
 #!/usr/bin/ash
 
 run_hook() {
+	mount_handler=zram_mount_handler
+}
+
+zram_mount_handler() {
 	[ "$(getarg matool_debug)" = y ] && ash
 	modprobe zram
     ramsize="$(awk '/MemTotal/{print $2}' /proc/meminfo)"
