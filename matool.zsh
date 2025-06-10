@@ -105,6 +105,7 @@ for file (
 	./etc/machine-id
 	./var/lib/dbus/machine-id
 	./var/lib/systemd/random-seed
+	./lib/firmware/nvidia
 ) {
 	if [[ -e $file ]] rm -vr $file
 }
