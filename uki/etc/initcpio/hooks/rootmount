@@ -40,4 +40,5 @@ zram_mount_handler() {
 
 	umount /new_root
 	mount "$root" /new_root -o rw,noatime
+	[ "$(getarg matool_debug)" = y ] && ash
 }
