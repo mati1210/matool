@@ -1,5 +1,6 @@
 #!/usr/bin/zsh -xve
 SCRIPTDIR=${0:h:A}
+setopt globstarshort
 cd $SCRIPTDIR
 
 : ${HOSTNAME:=matool}
@@ -109,6 +110,7 @@ for file (
 ) {
 	if [[ -e $file ]] rm -vr $file
 }
+unzstd --rm ./lib/modules/**.ko.zst
 find -name '*.pacnew' -delete
 
 echo 'Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch' >etc/pacman.d/mirrorlist
@@ -132,7 +134,7 @@ mkdir out
 btrfs send --proto 2 @|compress > out/root.${COMPALG[1]}
 
 arch-chroot . \
-	mkinitcpio \
+	bash -c 'depmod && mkinitcpio \
 		--config /etc/mkinitcpio.conf \
 		--cmdline /etc/cmdline \
-		--uki /out/mow.efi
+		--uki /out/mow.efi'
