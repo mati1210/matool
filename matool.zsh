@@ -111,6 +111,7 @@ for file (
 	if [[ -e $file ]] rm -vr $file
 }
 unzstd --rm ./lib/modules/**.ko.zst
+arch-chroot . depmod
 find -name '*.pacnew' -delete
 
 echo 'Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch' >etc/pacman.d/mirrorlist
@@ -134,7 +135,7 @@ mkdir out
 btrfs send --proto 2 @|compress > out/root.${COMPALG[1]}
 
 arch-chroot . \
-	bash -c 'depmod && mkinitcpio \
+	mkinitcpio \
 		--config /etc/mkinitcpio.conf \
 		--cmdline /etc/cmdline \
-		--uki /out/mow.efi'
+		--uki /out/mow.efi
